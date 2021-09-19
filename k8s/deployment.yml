@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: barebone-http-1
+  labels:
+    app: barebone-http-1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: barebone-http-1
+
+  template:
+    metadata:
+      labels:
+        app: barebone-http-1
+    spec:
+      containers:
+      - name: web-app
+        image: gcr.io/hidden-server-318721/barebone-http-1:latest
+        ports:
+          - containerPort: 3000

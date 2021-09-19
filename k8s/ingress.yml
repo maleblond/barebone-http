@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: barebone-http-1
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt"
+spec:
+  tls:
+    - hosts:
+      - barebone-http-1.maleblond.com
+      secretName: barebone-http-1-tls
+  rules:
+  - host: barebone-http-1.maleblond.com
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: barebone-http-1
+              port:
+                number: 80

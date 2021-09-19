@@ -11,11 +11,10 @@ import (
 	"strings"
 )
 
-const HOST = "localhost"
 const PORT = "3000"
 
 func main() {
-	l, err := net.Listen("tcp", HOST+":"+PORT)
+	l, err := net.Listen("tcp", ":"+PORT)
 
 	if err != nil {
 		fmt.Println("Error listening:", err.Error())
@@ -24,14 +23,14 @@ func main() {
 
 	defer l.Close()
 
-	fmt.Println("Listening on " + HOST + ":" + PORT)
+	fmt.Println("Listening on port: " + PORT)
 
 	for {
 		conn, err := l.Accept()
 
 		if err != nil {
 			fmt.Println("Error accepting connection:", err.Error())
-			os.Exit(1)
+			continue
 		}
 
 		go handleRequest(conn)
@@ -65,9 +64,8 @@ func handleRequest(conn net.Conn) {
 
 	io.ReadFull(reader, body)
 	request.body = string(body)
-	fmt.Printf("%+v\n", request)
 
-	conn.Write([]byte("HTTP/1.1 200 OK\n\nPatate frite"))
+	conn.Write([]byte(fmt.Sprintf("HTTP/1.1 200 OK\n\nHere is a response with your passed body: %v\n", request.body)))
 
 	conn.Close()
 }
