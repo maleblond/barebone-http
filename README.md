@@ -1,0 +1,3 @@
+Implementation of a basic http server in golang, without using the net/http lib.
+
+Just did it as an exercise to check how http 1.0 works at a lower level. Missing a ton of features like multi-threading, timeouts, safery checks etc...
